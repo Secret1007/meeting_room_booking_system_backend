@@ -42,7 +42,7 @@ export class UserController {
   }
 
   @Post('register')
-  register(@Body() registerUser: RegisterUserDto) {
-    return 'success';
+  async register(@Body() registerUser: RegisterUserDto) {
+    return await this.userService.register(registerUser);
   }
 }

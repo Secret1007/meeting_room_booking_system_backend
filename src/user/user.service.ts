@@ -59,5 +59,19 @@ export class UserService {
     if (foundUser) {
       throw new HttpException('用户已存在', HttpStatus.BAD_REQUEST);
     }
+
+    const newUser = new User();
+    newUser.username = user.username;
+    newUser.password = user.password;
+    newUser.email = user.email;
+    newUser.nickName = user.nickName;
+
+    try {
+      await this.userRepository.save(newUser);
+      return '注册成功';
+    } catch (e) {
+      this.logger.error(e, UserService);
+      return '注册失败';
+    }
   }
 }
