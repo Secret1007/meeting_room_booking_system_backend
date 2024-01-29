@@ -13,3 +13,8 @@ A project based on nestjs,redis,typeOrm
 
 1. generate Email Authorization Code
 2. use package [nodemailer](https://www.npmjs.com/package/nodemailer) complete email logic
+
+## extract config
+
+1. create .env under directory /src
+2. extract config information to .env
