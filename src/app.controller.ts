@@ -1,5 +1,6 @@
 import { Controller, Get, SetMetadata } from '@nestjs/common';
 import { AppService } from './app.service';
+import { RequireLogin } from './custom.decorator';
 
 @Controller()
 export class AppController {
@@ -8,5 +9,10 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+  @Get('/aaa')
+  @RequireLogin()
+  getAAA(): string {
+    return '123aaa';
   }
 }
