@@ -18,3 +18,10 @@ A project based on nestjs,redis,typeOrm
 
 1. create .env under directory /src
 2. extract config information to .env
+
+## add swagger plugin
+
+1. use DocumentBuilder Class to create document config instance
+2. use SwaggerModule to generate api document and mount onto the app.
+3. standardize the documentation content using the corresponding API specifications.
+4. add the ApiProperty attribute to the corresponding DTO
