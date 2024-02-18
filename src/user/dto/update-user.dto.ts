@@ -1,9 +1,12 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
 import { IsEmail, IsNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
+  @ApiProperty()
   headPic: string;
+  @ApiProperty()
   nickName: string;
 
   @IsNotEmpty({
@@ -15,10 +18,12 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
       message: '不是合法的邮箱格式',
     },
   )
+  @ApiProperty()
   email: string;
 
   @IsNotEmpty({
     message: '验证码不能为空',
   })
+  @ApiProperty()
   captcha: string;
 }
