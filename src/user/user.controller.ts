@@ -1,32 +1,18 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
+  DefaultValuePipe,
   Delete,
+  Get,
+  HttpStatus,
   Inject,
+  Param,
+  Post,
   Query,
   UnauthorizedException,
-  ParseIntPipe,
-  BadRequestException,
-  DefaultValuePipe,
-  HttpStatus,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { RegisterUserDto } from './dto/register-user.dto';
-import { EmailService } from 'src/email/email.service';
-import { RedisService } from 'src/redis/redis.service';
-import { LoginUserDto } from './dto/login-user.dto';
-import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { RequireLogin, UserInfo } from 'src/custom.decorator';
-import { UserDetailVo } from './vo/user-info.vo';
-import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
-import { generateParseIntPipe } from 'src/utils';
+import { JwtService } from '@nestjs/jwt';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -34,8 +20,19 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { RequireLogin, UserInfo } from 'src/custom.decorator';
+import { EmailService } from 'src/email/email.service';
+import { RedisService } from 'src/redis/redis.service';
+import { generateParseIntPipe } from 'src/utils';
+import { CreateUserDto } from './dto/create-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
+import { RegisterUserDto } from './dto/register-user.dto';
+import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserService } from './user.service';
 import { LoginUserVo } from './vo/login-user.vo';
 import { RefreshTokenVo } from './vo/refresh-token.vo';
+import { UserDetailVo } from './vo/user-info.vo';
 
 @ApiTags('用户管理模块')
 @Controller('user')
