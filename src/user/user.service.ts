@@ -71,7 +71,7 @@ export class UserService {
 
     const newUser = new User();
     newUser.username = user.username;
-    newUser.password = user.password;
+    newUser.password = md5(user.password);
     newUser.email = user.email;
     newUser.nickName = user.nickName;
 
@@ -134,6 +134,8 @@ export class UserService {
     if (!user) {
       throw new HttpException('用户不存在', HttpStatus.BAD_REQUEST);
     }
+    console.log('loginUserDto.password:', loginUserDto.password);
+
     if (user.password !== md5(loginUserDto.password)) {
       throw new HttpException('密码错误', HttpStatus.BAD_REQUEST);
     }
@@ -175,6 +177,7 @@ export class UserService {
     return {
       id: user.id,
       username: user.username,
+      email: user.email,
       isAdmin: user.isAdmin,
       roles: user.roles.map((item) => item.name),
       permissions: user.roles.reduce((arr, item) => {
@@ -198,7 +201,7 @@ export class UserService {
     return user;
   }
 
-  async updatePassword(userId: number, passwordDto: UpdateUserPasswordDto) {
+  async updatePassword(passwordDto: UpdateUserPasswordDto) {
     const captcha = await this.redisService.get(
       `update_password_captcha_${passwordDto.email}`,
     );
@@ -212,8 +215,12 @@ export class UserService {
     }
 
     const foundUser = await this.userRepository.findOneBy({
-      id: userId,
+      username: passwordDto.username,
     });
+
+    if (foundUser.email !== passwordDto.email) {
+      throw new HttpException('邮箱不正确', HttpStatus.BAD_REQUEST);
+    }
 
     foundUser.password = md5(passwordDto.password);
 
